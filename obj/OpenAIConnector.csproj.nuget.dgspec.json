@@ -52,6 +52,10 @@
             "Azure.Identity": {
               "target": "Package",
               "version": "[1.9.0, )"
+            },
+            "Microsoft.ML.AutoML": {
+              "target": "Package",
+              "version": "[0.20.1, )"
             }
           },
           "imports": [

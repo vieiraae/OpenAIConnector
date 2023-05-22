@@ -6,16 +6,16 @@ namespace OpenAIConnector
     {
 
         private ClientBuilder? clientBuilder;
-        private Completion? completion;
+        private Chat? chatCompletion;
         public ChatUnitTests(ClientBuilder clientBuilder)
         {
             this.clientBuilder = clientBuilder;
-            this.completion = new(clientBuilder);
+            this.chatCompletion = new(clientBuilder);
         }
 
         public async Task UnitTest1(string deploymentOrModelName)
         {
-            if (clientBuilder is null) throw new System.Exception("Client not initialized");
+            if (chatCompletion is null) throw new System.Exception("Client not initialized");
             var chatCompletionsOptions = new ChatCompletionsOptions()
             {
                 Messages =
@@ -28,10 +28,9 @@ namespace OpenAIConnector
                 MaxTokens = 100
             };
 
-            Response<StreamingChatCompletions> completionsResponse = await clientBuilder.GetClient().GetChatCompletionsStreamingAsync(
-                deploymentOrModelName: deploymentOrModelName,
+            StreamingChatCompletions streamingChatCompletions = await chatCompletion.GetChatCompletionsStreamingAsync(
+                deploymentOrModelName,
                 chatCompletionsOptions);
-            using StreamingChatCompletions streamingChatCompletions = completionsResponse.Value;
 
             await foreach (StreamingChatChoice choice in streamingChatCompletions.GetChoicesStreaming())
             {

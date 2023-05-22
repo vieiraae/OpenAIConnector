@@ -33,6 +33,13 @@ namespace OpenAIConnector
             return client;
         }
 
+        public void GetDeploymentModels() 
+        {
+            if (client == null)
+                throw new System.Exception("Client not initialized");
+
+        }
+
     }
 
 }
